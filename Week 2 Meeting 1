@@ -4,3 +4,21 @@ We found that using a server or database will improve: organization, user access
 
 We found that Django and Flask are backend languages that pair well with python, and we're looking into different ways to utilize these backend languages in our project 
 
+Why use a backend??:
+Scalable - backend coding will allow our project to go beyond just a local script and multiple users can interact with the system at once.
+Security - Sensitive data can be protected with authenitication and permissions.
+Data integrity - Databases enforces structure, so your data stays consitent and reliable
+
+Flask: 
+Lightweight and Flexible
+Great for smaller projects or when you want full control
+Easier learning curve, fewer built in features
+Extensions can be added for authentication and database intergrtion
+
+Django:
+Lots of built in tools
+Includes use authentication, admin dashboard, and object-relational mapping(ORM)
+Best for larger projects that need structure and security
+Slightly steeper learning curve, but reduces the need for external projects. 
+
+We have also found some databases such as SQlite, PostgreSQL, MySQL and NoSQL. 
