@@ -1,0 +1,13 @@
+10/3, Week 2 scrums, meeting #2.
+
+We are almost finsihed to finding the best tools to build a reliable system for saving the patient's information.
+
+We are testing out our backend options. 
+We have started building two basic prototypes-ones with Flask abd one with Django-to see which framework is better got our patient data system.
+
+This Week's Focus: 
+creating a simple "Add Patient" form in both of the Flask and Django.
+Testing how each one of them connects to a database.
+Comparing the setup process and ease of use.
+
+We are slowly building a small version of our system in both tools to help us make a better or final decision.
