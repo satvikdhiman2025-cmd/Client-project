@@ -1,0 +1,11 @@
+Agenda: Now that we've tested both Flask and Django prototypes, our next step is to analyze results and begin shaping the foundation of the final patient information system. 
+
+Discussion points: 
+1. Review findings from last weeks prototype testing.
+2. Decide on final backend framework to continue developement.
+3. Discuss any technical challeneges faced during testing and possible solutions. 
+
+This weeks focus: 
+1. Begin building the core database scheme for storing patient data.
+2. Create an improved UI for adding and viewing patient records. 
+3. Start setting up user authentication and basic access control.
