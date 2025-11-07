@@ -36,7 +36,38 @@ def container():                                 # Object list that stores all o
             "Laboratory tests", "Imaging studies",
             "Osteoarthritis", "Rheumatoid athritis",
             "Crystal-induced arthritis",
-            "Infectious arthritis"
+            "Infectious arthritis.")
+  Diagnosis("Hypertension",
+            "Blood pressure measurement",
+            "Ambulatory monitoring, Laboratory tests",
+            "White coat hypertension",
+            "Secondary hypertension, 
+            "Essential hypertension",
+            "Lifestyle modifications",
+            "ACE inhibitors",
+            "Beta-blockers",
+            "Calcium channel blockers",
+            "Diuretics",
+            "Controllable with medication; potential complications include heart attack, stroke, kidney damage.")
+  Diagnosis("Kidney Cancer",
+            "CT scan",
+            "Biopsy", "Urinalysis",
+            "Kidney cysts", "Stones, Infections",
+            "Surgery", "Immunotherapy",
+            "Targeted therapy",
+            "Good if caught early; varies by stage")
+  Diagnosis("Asthma",
+            "Spirometry", "Peak flow test", 
+            "Chest X-ray",
+            "Bronchitis", "COPD", 
+            "Heart failure", "Anxiety",
+            "Inhalers", "Steroids", "Avoid triggers",
+            "Chronic but manageable with treatment")
+  Diagnosis("Migraine",
+            "Neurological exam", "MRI", "CT scan",
+            "Tension headache", "Sinus headache", "Cluster headache",
+            "Pain relievers", "Triptans", "Preventive medications",
+            "Chronic condition with episodic attacks; manageable")
   ]
 
 def userInput():
