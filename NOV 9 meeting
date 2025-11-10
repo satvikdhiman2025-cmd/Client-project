@@ -1,0 +1,82 @@
+class Diagnosis:                                                                                # Initializes a Diagnosis class 
+  def __innit__(self, name, tests, differentialDiagnoses, treatment, prognosis):
+    self.name = name
+    self.tests = tests
+    self.differentialDiagnoses = differentialDiagnoses
+    self.treatment = treatment
+    self.prognosis = prognosis
+
+  def __str__(self):                                                      # Displays diagnosis name, tests, differential, treatment, and prognosis
+   return f"""
+Diagnosis: {self.name}
+Tests: {self.tests)
+Differential Diagnoses: {differentialDiagnoses}
+Treatment: {self.treatment}
+Prognosis: {self.prognosis}
+"""
+
+def container():                                 # Object list that stores all of our diagnoses                                                                         
+  diagnoses = [
+    Diagnosis("Diabetes.",
+              "A1C test, blood sugar tests, oral glucose tolerance test.",
+              "Hyperglycemia, endocrine disorders, pancreatic diseases.",
+              "Insulin, diet alterations.",
+              "Potential for strokes, nerve & kidney damage, Vision loss, and a requirment to track insulin.")
+    Diagnosis("Coronavirus.",
+              "Nose Swab", "Influenza, Common Cold, Respiatory Syncytial Virus.",
+              "Rest and Quarantine.", 
+              "Asymptomatic infection.")
+    Diagnosis("Influenza.",
+              "Molecular assays, Rapid influenza diagnostic.",
+              "Common cold, Covid-19, Respiratory Syncytial Vorus (RSV), Human Parainfluenza Viruses (HPIV).",
+              "Oseltamivir (Tamiflu), Baloxvir marboxil (Xofluza).",
+              "High-risk group, Possible complications.")
+  Diagnosis("Arthritis.", 
+            "Clinical evaluation, Laboratory tests, Imaging studies.",
+            "Osteoarthritis, Rheumatoid athritis.",
+            "Crystal-induced arthritis.",
+            "Infectious arthritis.")
+  Diagnosis("Hypertension",
+            "Blood pressure measurement, Ambulatory monitoring, Laboratory tests.",
+            "White coat hypertension, Secondary hypertension, Essential hypertension.",
+            "Lifestyle modifications, ACE inhibitors, Beta-blockers, Calcium channel blockers, Diuretics.",
+            "Controllable with medication; potential complications include heart attack, stroke, kidney damage.")
+  Diagnosis("Kidney Cancer",
+            "CT scan, Biopsy, Urinalysis.",
+            "Kidney cysts, Stones, Infections.",
+            "Surgery", Immunotherapy, Targeted therapy.",
+            "Good if caught early; varies by stage.")
+  Diagnosis("Asthma",
+            "Spirometry, Peak flow test, Chest X-ray.", 
+            "Bronchitis, COPD, Heart failure, Anxiety.",    
+            "Inhalers, Steroids, Avoid triggers.",
+            "Chronic but manageable with treatment.")
+  Diagnosis("Migraine.",
+            "Neurological exam, MRI, CT scan.",
+            "Tension headache, Sinus headache, Cluster headache.",
+            "Pain relievers, Triptans, Preventive medications.",
+            "Chronic condition with episodic attacks; manageable.")
+  ]
+
+def userInput():
+  try:
+    status = True
+    while status == True:                                                                                   #Initializing a loop that continues to ask users if they wanna do a new search
+      search = input("What diagnosis are you interested in researching?: ")                                 # Try and except in the instance we cant locate their diagnosis
+  except ValueError:
+    print("Invalid Input. Please enter the name of an illness to search for.")
+  except:
+    print("Couldn't locate specified diagnosis.")
+  finally:
+    try:
+      runAgainPrompt = ("Do you want to search for another diagnosis or see all diagnoses? (y / n / all): ")              #asking if they want to see all/search for a new diag, or stop running
+      if runAgainPrompt == "y" or runAgainPrompt == "yes" or runAgainPrompt == "Yes" or runAgainPrompt == "yes".upper() or runAgainPrompt =='Y':
+        status = True
+      elif runAgainPrompt == "all" or runAgainPrompt == 'a' or runAgainPrompt == "All" or runAgainPrompt == 'A' or runAgainPrompt == "all".upper():
+        print()
+        #maybe make a new function
+      elif runAgainPrompt == "n" or runAgainPrompt == 'N' or runAgainPrompt == "no".upper() or runAgainPrompt == "No":
+        print("Exiting Program.")
+        status = False
+    except ValueError:
+      print("Please enter  yes / no / all")
