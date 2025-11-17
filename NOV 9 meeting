@@ -56,6 +56,96 @@ def container():                                 # Object list that stores all o
             "Tension headache, Sinus headache, Cluster headache.",
             "Pain relievers, Triptans, Preventive medications.",
             "Chronic condition with episodic attacks; manageable.")
+  Diagnosis("Pneumonia",
+          "Chest X-ray, Blood tests, Sputum culture.",
+          "Bronchitis, COPD exacerbation, COVID-19, Heart failure.",
+          "Antibiotics (if bacterial), Rest, Fluids.",
+          "Can become severe in elderly or immunocompromised patients.")
+
+Diagnosis("Appendicitis",
+          "CT scan, Ultrasound, Blood tests.",
+          "Gastroenteritis, Ovarian torsion, Kidney stones.",
+          "Surgical removal of appendix.",
+          "Excellent prognosis with early surgery.")
+
+Diagnosis("Gallstones",
+          "Ultrasound, CT scan, HIDA scan.",
+          "Gallbladder inflammation, Kidney stones, Pancreatitis.",
+          "Diet changes, Pain relief, Surgery (cholecystectomy).",
+          "Good prognosis after removal; risk of recurrence if untreated.")
+
+Diagnosis("Anemia",
+          "CBC, Iron studies, B12/folate levels.",
+          "Thalassemia, Chronic disease anemia, Acute blood loss.",
+          "Iron supplements, B12 injections, Treat underlying cause.",
+          "Often reversible if underlying cause is addressed.")
+
+Diagnosis("Hypothyroidism",
+          "TSH and T4 blood tests.",
+          "Depression, Anemia, Chronic fatigue, Menopause.",
+          "Levothyroxine therapy.",
+          "Requires lifelong medication but very manageable.")
+
+Diagnosis("Hyperthyroidism",
+          "TSH, T3/T4 levels, Thyroid scan.",
+          "Anxiety, Cardiac arrhythmias, Weight loss disorders.",
+          "Antithyroid drugs, Radioiodine therapy, Surgery.",
+          "Treatable; untreated can cause heart complications.")
+
+Diagnosis("COPD",
+          "Spirometry, Chest X-ray, CT scan.",
+          "Asthma, Bronchiectasis, Heart failure.",
+          "Bronchodilators, Steroids, Oxygen therapy.",
+          "Chronic and progressive; symptom-focused treatment.")
+
+Diagnosis("Depression",
+          "Clinical interview, Psychological evaluation.",
+          "Bipolar disorder, Anxiety disorders, Hypothyroidism.",
+          "Therapy, SSRIs, Lifestyle interventions.",
+          "Highly treatable with consistent care.")
+
+Diagnosis("Generalized Anxiety Disorder",
+          "Clinical evaluation, Screening questionnaires.",
+          "Hyperthyroidism, Panic disorder, PTSD.",
+          "Therapy (CBT), SSRIs, Stress-reduction techniques.",
+          "Chronic but manageable with treatment.")
+
+Diagnosis("Peptic Ulcer Disease",
+          "Endoscopy, H. pylori testing, Upper GI series.",
+          "Gastritis, GERD, Gallbladder disease.",
+          "Antibiotics (if H. pylori), PPIs, Avoid NSAIDs.",
+          "Good prognosis with adequate treatment.")
+
+Diagnosis("Sinusitis",
+          "Physical exam, CT scan (if chronic), Nasal endoscopy.",
+          "Allergies, Migraine, Dental infections.",
+          "Nasal steroids, Saline rinses, Antibiotics (if bacterial).",
+          "Usually resolves; chronic cases need long-term management.")
+
+Diagnosis("Eczema (Atopic Dermatitis)",
+          "Clinical exam.",
+          "Psoriasis, Contact dermatitis, Fungal infections.",
+          "Topical steroids, Moisturizers, Avoid triggers.",
+          "Chronic flares but controllable.")
+
+Diagnosis("Psoriasis",
+          "Skin exam, Biopsy if needed.",
+          "Eczema, Fungal infections, Lupus.",
+          "Topical treatments, Phototherapy, Biologics.",
+          "Chronic autoimmune condition; manageable with treatment.")
+
+Diagnosis("Irritable Bowel Syndrome (IBS)",
+          "Symptom evaluation, Stool tests, Colonoscopy (if needed).",
+          "IBD (Crohn's/UC), Celiac disease, Lactose intolerance.",
+          "Diet modification, Stress management, Antispasmodics.",
+          "Chronic but not life-threatening.")
+
+Diagnosis("Urinary Tract Infection (UTI)",
+          "Urinalysis, Urine culture.",
+          "Vaginitis, Kidney stones, Interstitial cystitis.",
+          "Antibiotics, Hydration, Pain relief.",
+          "Excellent prognosis with treatment; can worsen if untreated.")
+
   ]
 
 def userInput():
