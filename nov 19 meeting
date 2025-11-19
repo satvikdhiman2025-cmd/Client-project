@@ -1,0 +1,230 @@
+class Diagnosis:                                                                                # Initializes a Diagnosis class 
+  def __init__(self, name, tests, differentialDiagnoses, treatment, prognosis):
+    self.name = name
+    self.tests = tests
+    self.differentialDiagnoses = differentialDiagnoses
+    self.treatment = treatment
+    self.prognosis = prognosis
+
+  def __str__(self):                                                      # Displays diagnosis name, tests, differential, treatment, and prognosis
+   return f"""
+Diagnosis: {self.name}
+Tests: {self.tests}
+Differential Diagnoses: {self.differentialDiagnoses}
+Treatment: {self.treatment}
+Prognosis: {self.prognosis}
+"""
+
+def container():                                 # Object list that stores all of our diagnoses                                                                         
+  diagnoses = [
+    Diagnosis("Diabetes.",
+                "A1C test, blood sugar tests, oral glucose tolerance test.",
+                "Hyperglycemia, endocrine disorders, pancreatic diseases.",
+                "Insulin, diet alterations.",
+                "Potential for strokes, nerve & kidney damage, Vision loss, and a requirment to track insulin.")
+    Diagnosis("Coronavirus.",
+                  "Nose Swab", "Influenza, Common Cold, Respiatory Syncytial Virus.",
+                  "Rest and Quarantine.", 
+                  "Asymptomatic infection.")
+    Diagnosis("Influenza.",
+                  "Molecular assays, Rapid influenza diagnostic.",
+                  "Common cold, Covid-19, Respiratory Syncytial Vorus (RSV), Human Parainfluenza Viruses (HPIV).",
+                  "Oseltamivir (Tamiflu), Baloxvir marboxil (Xofluza).",
+                  "High-risk group, Possible complications.")
+    Diagnosis("Arthritis.", 
+                "Clinical evaluation, Laboratory tests, Imaging studies.",
+                "Osteoarthritis, Rheumatoid athritis.",
+                "Crystal-induced arthritis.",
+                "Infectious arthritis.")
+    Diagnosis("Hypertension",
+                "Blood pressure measurement, Ambulatory monitoring, Laboratory tests.",
+                "White coat hypertension, Secondary hypertension, Essential hypertension.",
+                "Lifestyle modifications, ACE inhibitors, Beta-blockers, Calcium channel blockers, Diuretics.",
+                "Controllable with medication; potential complications include heart attack, stroke, kidney damage.")
+    Diagnosis("Kidney Cancer",
+                "CT scan, Biopsy, Urinalysis.",
+                "Kidney cysts, Stones, Infections.",
+                "Surgery, Immunotherapy, Targeted therapy.",
+                "Good if caught early; varies by stage.")
+    Diagnosis("Asthma",
+                "Spirometry, Peak flow test, Chest X-ray.", 
+                "Bronchitis, COPD, Heart failure, Anxiety.",    
+                "Inhalers, Steroids, Avoid triggers.",
+                "Chronic but manageable with treatment.")
+    Diagnosis("Migraine.",
+                "Neurological exam, MRI, CT scan.",
+                "Tension headache, Sinus headache, Cluster headache.",
+                "Pain relievers, Triptans, Preventive medications.",
+                "Chronic condition with episodic attacks; manageable.")
+    Diagnosis("Pneumonia",
+              "Chest X-ray, Blood tests, Sputum culture.",
+              "Bronchitis, COPD exacerbation, COVID-19, Heart failure.",
+              "Antibiotics (if bacterial), Rest, Fluids.",
+              "Can become severe in elderly or immunocompromised patients.")
+  
+    Diagnosis("Appendicitis",
+              "CT scan, Ultrasound, Blood tests.",
+              "Gastroenteritis, Ovarian torsion, Kidney stones.",
+              "Surgical removal of appendix.",
+              "Excellent prognosis with early surgery.")
+  
+    Diagnosis("Gallstones",
+              "Ultrasound, CT scan, HIDA scan.",
+              "Gallbladder inflammation, Kidney stones, Pancreatitis.",
+              "Diet changes, Pain relief, Surgery (cholecystectomy).",
+              "Good prognosis after removal; risk of recurrence if untreated.")
+  
+    Diagnosis("Anemia",
+              "CBC, Iron studies, B12/folate levels.",
+              "Thalassemia, Chronic disease anemia, Acute blood loss.",
+              "Iron supplements, B12 injections, Treat underlying cause.",
+              "Often reversible if underlying cause is addressed.")
+  
+    Diagnosis("Hypothyroidism",
+              "TSH and T4 blood tests.",
+              "Depression, Anemia, Chronic fatigue, Menopause.",
+              "Levothyroxine therapy.",
+              "Requires lifelong medication but very manageable.")
+  
+    Diagnosis("Hyperthyroidism",
+              "TSH, T3/T4 levels, Thyroid scan.",
+              "Anxiety, Cardiac arrhythmias, Weight loss disorders.",
+              "Antithyroid drugs, Radioiodine therapy, Surgery.",
+              "Treatable; untreated can cause heart complications.")
+  
+    Diagnosis("COPD",
+              "Spirometry, Chest X-ray, CT scan.",
+              "Asthma, Bronchiectasis, Heart failure.",
+              "Bronchodilators, Steroids, Oxygen therapy.",
+              "Chronic and progressive; symptom-focused treatment.")
+  
+    Diagnosis("Depression",
+              "Clinical interview, Psychological evaluation.",
+              "Bipolar disorder, Anxiety disorders, Hypothyroidism.",
+              "Therapy, SSRIs, Lifestyle interventions.",
+              "Highly treatable with consistent care.")
+  
+    Diagnosis("Generalized Anxiety Disorder",
+            "Clinical evaluation, Screening questionnaires.",
+            "Hyperthyroidism, Panic disorder, PTSD.",
+            "Therapy (CBT), SSRIs, Stress-reduction techniques.",
+            "Chronic but manageable with treatment.")
+  
+    Diagnosis("Peptic Ulcer Disease",
+            "Endoscopy, H. pylori testing, Upper GI series.",
+            "Gastritis, GERD, Gallbladder disease.",
+            "Antibiotics (if H. pylori), PPIs, Avoid NSAIDs.",
+            "Good prognosis with adequate treatment.")
+  
+    Diagnosis("Sinusitis",
+              "Physical exam, CT scan (if chronic), Nasal endoscopy.",
+              "Allergies, Migraine, Dental infections.",
+              "Nasal steroids, Saline rinses, Antibiotics (if bacterial).",
+              "Usually resolves; chronic cases need long-term management.")
+  
+    Diagnosis("Eczema (Atopic Dermatitis)",
+              "Clinical exam.",
+              "Psoriasis, Contact dermatitis, Fungal infections.",
+              "Topical steroids, Moisturizers, Avoid triggers.",
+              "Chronic flares but controllable.")
+  
+    Diagnosis("Psoriasis",
+              "Skin exam, Biopsy if needed.",
+              "Eczema, Fungal infections, Lupus.",
+              "Topical treatments, Phototherapy, Biologics.",
+              "Chronic autoimmune condition; manageable with treatment.")
+  
+    Diagnosis("Irritable Bowel Syndrome (IBS)",
+              "Symptom evaluation, Stool tests, Colonoscopy (if needed).",
+              "IBD (Crohn's/UC), Celiac disease, Lactose intolerance.",
+              "Diet modification, Stress management, Antispasmodics.",
+              "Chronic but not life-threatening.")
+  
+    Diagnosis("Urinary Tract Infection (UTI)",
+              "Urinalysis, Urine culture.",
+              "Vaginitis, Kidney stones, Interstitial cystitis.",
+              "Antibiotics, Hydration, Pain relief.",
+              "Excellent prognosis with treatment; can worsen if untreated.")
+  
+    Diagnosis("Alzheimer's Disease",
+              "Cognitive testing, MRI, PET scan, Blood tests.",
+              "Other dementias, Depression, Vitamin deficiencies.",
+              "Supportive care, Medications for cognitive symptoms.",
+              "Progressive; currently no cure, but symptom management is possible.")
+  
+    Diagnosis("Parkinson's Disease",
+              "Neurological exam, MRI, DaTscan, Response to medication.",
+              "Essential tremor, Multiple system atrophy, Drug-induced parkinsonism.",
+              "Levodopa, Dopamine agonists, Physical therapy.",
+              "Chronic and progressive; symptoms can be managed.")
+  
+    Diagnosis("Epilepsy",
+              "EEG, MRI, Blood tests.",
+              "Syncope, Migraine, Psychogenic non-epileptic seizures.",
+              "Antiepileptic drugs, Surgery (in some cases), Lifestyle adjustments.",
+              "Chronic; seizure control possible in many patients.")
+  
+    Diagnosis("Chronic Kidney Disease",
+              "Blood tests, Urinalysis, Imaging, Kidney biopsy (if needed).",
+              "Acute kidney injury, Urinary obstruction, Glomerulonephritis.",
+              "Dialysis, Diet modifications, Blood pressure control, Medications.",
+              "Progressive; can lead to kidney failure without management.")
+  
+    Diagnosis("Heart Failure",
+              "Echocardiogram, ECG, Blood tests, Chest X-ray.",
+              "COPD, Kidney disease, Pulmonary embolism.",
+              "Diuretics, ACE inhibitors, Beta-blockers, Lifestyle changes.",
+              "Chronic; can be managed but requires ongoing care.")
+  
+    Diagnosis("Obesity",
+              "BMI calculation, Waist circumference, Blood tests.",
+              "Hypothyroidism, Cushing’s syndrome, Genetic syndromes.",
+              "Lifestyle modification, Medications, Surgery (bariatric).",
+              "Increases risk of diabetes, heart disease, stroke, and certain cancers.")
+  
+    Diagnosis("Stroke",
+              "CT scan, MRI, Physical and neurological exams.",
+              "TIA, Migraine with aura, Seizure.",
+              "Clot-busting medications, Surgery, Rehabilitation.",
+              "Potential permanent neurological damage; time-sensitive treatment.")
+
+  ]
+  return diagnoses
+
+def findSearch(diagnoses,search):
+  search = search.lower().strip()
+  for diagnosis in diagnoses:
+    if search in diagnosis.name.lower():
+      return diagnosis
+  return None
+
+
+def userInput():
+  diagnoses = container()
+  try:
+    flag = True
+    while flag == True:                                                                                   #Initializing a loop that continues to ask users if they wanna do a new search
+      search = input("What diagnosis are you interested in researching?: ")                                 # Try and except in the instance we cant locate their diagnosis
+      locatedDiagnosis = findSearch(diagnoses,search)
+      if locatedDiagnosis:
+        print(locatedDiagnosis)
+      else:
+        print("Couldn't locate specified diagnosis:",search)
+
+      runAgainPrompt = input("Do you want to search for another diagnosis or see all diagnoses? (y / n / all): ")              #asking if they want to see all/search for a new diag, or stop running
+      if runAgainPrompt == "y" or runAgainPrompt == "yes" or runAgainPrompt == "Yes" or runAgainPrompt == "yes".upper() or runAgainPrompt =='Y':
+        flag = True
+      elif runAgainPrompt == "all" or runAgainPrompt == 'a' or runAgainPrompt == "All" or runAgainPrompt == 'A' or runAgainPrompt == "all".upper():
+        print()
+        flag = True
+        #maybe make a new function
+      elif runAgainPrompt == "n" or runAgainPrompt == 'N' or runAgainPrompt == "no".upper() or runAgainPrompt == "No":
+        print("Exiting Program.")
+        flag = False
+      else:
+        print("Invalid input. Please enter yes/no/all.")
+  except Exception as e:
+      print(f"An error has occured: {e}")
+
+if __name__ == "__main__":
+  userInput()      
