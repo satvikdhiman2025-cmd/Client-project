@@ -146,6 +146,49 @@ Diagnosis("Urinary Tract Infection (UTI)",
           "Antibiotics, Hydration, Pain relief.",
           "Excellent prognosis with treatment; can worsen if untreated.")
 
+Diagnosis("Alzheimer's Disease",
+          "Cognitive testing, MRI, PET scan, Blood tests.",
+          "Other dementias, Depression, Vitamin deficiencies.",
+          "Supportive care, Medications for cognitive symptoms.",
+          "Progressive; currently no cure, but symptom management is possible.")
+
+Diagnosis("Parkinson's Disease",
+          "Neurological exam, MRI, DaTscan, Response to medication.",
+          "Essential tremor, Multiple system atrophy, Drug-induced parkinsonism.",
+          "Levodopa, Dopamine agonists, Physical therapy.",
+          "Chronic and progressive; symptoms can be managed.")
+
+Diagnosis("Epilepsy",
+          "EEG, MRI, Blood tests.",
+          "Syncope, Migraine, Psychogenic non-epileptic seizures.",
+          "Antiepileptic drugs, Surgery (in some cases), Lifestyle adjustments.",
+          "Chronic; seizure control possible in many patients.")
+
+Diagnosis("Chronic Kidney Disease",
+          "Blood tests, Urinalysis, Imaging, Kidney biopsy (if needed).",
+          "Acute kidney injury, Urinary obstruction, Glomerulonephritis.",
+          "Dialysis, Diet modifications, Blood pressure control, Medications.",
+          "Progressive; can lead to kidney failure without management.")
+
+Diagnosis("Heart Failure",
+          "Echocardiogram, ECG, Blood tests, Chest X-ray.",
+          "COPD, Kidney disease, Pulmonary embolism.",
+          "Diuretics, ACE inhibitors, Beta-blockers, Lifestyle changes.",
+          "Chronic; can be managed but requires ongoing care.")
+
+Diagnosis("Obesity",
+          "BMI calculation, Waist circumference, Blood tests.",
+          "Hypothyroidism, Cushing’s syndrome, Genetic syndromes.",
+          "Lifestyle modification, Medications, Surgery (bariatric).",
+          "Increases risk of diabetes, heart disease, stroke, and certain cancers.")
+
+Diagnosis("Stroke",
+          "CT scan, MRI, Physical and neurological exams.",
+          "TIA, Migraine with aura, Seizure.",
+          "Clot-busting medications, Surgery, Rehabilitation.",
+          "Potential permanent neurological damage; time-sensitive treatment.")
+
+
   ]
 
 def userInput():
