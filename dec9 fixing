@@ -1,0 +1,333 @@
+import random
+import os
+class Diagnosis:   # Initializes a Diagnosis class
+  def __init__(self, name, symptoms, tests, differentialDiagnoses, treatment, prognosis):
+    self.name = name
+    self.symptoms = symptoms         # construct
+    self.symptomsList = [i.lower().strip() for i in symptoms.split(',')]
+    self.tests = tests
+    self.differentialDiagnoses = differentialDiagnoses
+    self.treatment = treatment
+    self.prognosis = prognosis
+
+
+  def calculateSimilarity(self,userSymptom,diagSymptom):
+    userWords = set(userSymptom.lower().split())         # create a set of user input sympts and diagnosis sympts
+    diagWords = set(diagSymptom.lower().replace('/',' ').split())
+    wordsInCommon = userWords.intersection(diagWords)
+    if not userWords or not diagWords:              #figure out if they have any words in common, adn provide an overlap score
+      return 0.0                                #based on the total words in common / total words in both user and diagnosis sympts
+    overlapScore = len(wordsInCommon)/len(userWords.union(diagWords))
+    if userSymptom.lower() in diagSymptom.lower():
+      overlapScore += 0.3                             #gives a bonus if the user input directly matches the diagnosis' sympts
+    elif diagSymptom.lower() in userSymptom.lower():
+      overlapScore += 0.2
+    return min(overlapScore,1.0)
+
+  def getMatchScore(self,userSymptoms,threshold=0.3):
+    totalScore = 0.0
+    matchedPairs = []   #set relevant vars
+    matchedDetails = {}
+    for userSymptom in userSymptoms:
+      bestMatchScore = 0.0    #vars assigned to each word the user inputs
+      bestMatchSymptom = None
+      for diagSymptom in self.symptomsList:  #iterates over symptoms keywords, then calls the calculate function
+        score = self.calculateSimilarity(userSymptom,diagSymptom)  # effectively comparing every diagnosis' symptm keywords to the users input sympts
+        if score > bestMatchScore:    # if we find a new high score we make that our best match score&symptom
+          bestMatchScore = score
+          bestMatchSymptom = diagSymptom
+      if bestMatchScore >= threshold:   #remember what each symptom best matches with
+        totalScore+=bestMatchScore
+        matchedPairs.append((userSymptom, bestMatchSymptom, bestMatchScore))
+        matchedDetails[userSymptom] = {
+            'matched to':bestMatchSymptom,
+            'score':bestMatchScore
+        }
+    actualScore = totalScore / len(userSymptoms) if userSymptoms else 0.0   #calculate average score of the entire sentecne
+    return actualScore, matchedPairs, matchedDetails
+
+
+  def __str__(self):   # display
+   return f"""
+======================================================
+Diagnosis: {self.name}
+Symptoms: {self.symptoms}
+Tests: {self.tests}
+Differential Diagnoses: {self.differentialDiagnoses}
+Treatment: {self.treatment}
+Prognosis: {self.prognosis}
+======================================================
+"""
+
+def loadDataFromFile():       # list of diagnoses,,
+    diagnoses = []
+    try:
+        with open('diagnosesData.txt','r',encoding='utf-8') as infile:
+            lines = infile.readlines()
+            for l in lines:
+                l = l.strip()
+                if not l:
+                    continue
+                parts = l.split('|')
+                if len(parts) == 6:
+                    name,symptoms,tests,differentialDiagnoses,treatment,prognosis = parts
+                    diagnoses.append(Diagnosis(
+                        name.strip(),
+                        symptoms.strip(),
+                        tests.strip(),
+                        differentialDiagnoses.strip(),
+                        treatment.strip(),
+                        prognosis.strip()
+                        ))
+                else:
+                    print('Skipping line with incorrect format.')
+        print(f'Loaded {len(diagnoses)} conditions from file.')
+    except Exception as e:
+        print(f"Error reading file: {e}")
+    return diagnoses
+
+def searchBySymptoms(diagnoses):
+  try:
+    symptSearch = input(f"""\nBriefly provide some of the major symptoms you are interested in researching
+(If applicable, seperate by comma. I.e: symptom1, symptom2, etc...) ('^' to see previous prompt, 'q' to quit): """)
+    userSymptoms = [i.strip().lower() for i in symptSearch.split(',')]
+    if not userSymptoms:                                                # create a list of symptoms the user input
+      print('No symptoms entered, please try again!')
+      return
+    elif symptSearch == '^':
+      findResearchMethod()
+      return
+    elif symptSearch.lower() == 'q' or symptSearch.lower() == 'quit':
+      print('Exiting Program.')
+      return
+    print(f'\nAnalyzing symptoms: {', '.join(userSymptoms)}')
+    scoredDiagnoses = []                   #iterate over each diagnosis, and call our matchScore function,
+    for diagnosis in diagnoses:            #comparing users input symptoms to the diagnosis' symptoms.
+      score, matchedPairs, matchedDetails = diagnosis.getMatchScore(userSymptoms)
+      if score > 0:
+        matchedCount = len(matchedPairs)      #figure out how many pairs there are
+        scoredDiagnoses.append({
+            'diagnosis':diagnosis,          #store our scored diagnosis with a dictionary, each key has a matching score value
+            'score':score,
+            'matched count':matchedCount,
+            'matched pairs':matchedPairs,
+            'match percentage': (matchedCount/len(userSymptoms)) * 100
+        })
+    scoredDiagnoses.sort(key=lambda x: x['score'],reverse=True)     #sort with highest scoring diagnosis at the bottom of the list
+    if not scoredDiagnoses:
+      print('\nNo potential diagnoses found! Maybe try changing your description.')
+      return
+    print(f'\nPotential diangoses located.')
+    print('------------------------------')
+    topMatches = scoredDiagnoses[:5]
+    for i,result in enumerate(topMatches,1):   #print the highest scores with the corresponding diagnosis
+      diagnosis = result['diagnosis']
+      print(f"{i}) {diagnosis.name} (Match Score: {result['score']:.2f}/1.00)")
+      if i == 1:
+        print(f"Full symptom list for {diagnosis.name}:")     #for the highest matching diagnosis, print out the symptoms
+        for symptom in diagnosis.symptomsList:               #so user can compare their inputs to the output
+          print(f'   -{symptom}')
+  except Exception as e:
+    print(f'An uncexpected error occured: {e}. Please try again.')
+  prompt1(diagnoses)
+
+def searchByName(diagnoses):
+  try:
+    nameSearch = input(f"\nWhat diagnosis are you interested in researching? ('^' to see previous prompt, 'q' to quit.): ")
+    if nameSearch == '^':
+      findResearchMethod(diagnoses)
+      return
+    elif nameSearch.lower() == 'q' or nameSearch.lower() == 'quit':
+      print(f'\nExiting Program.')
+      return
+    else:
+      found = False
+      cleanNameSearch = nameSearch.lower().strip()
+      for diagnosis in diagnoses:
+        if cleanNameSearch in diagnosis.name.lower():
+          print(diagnosis)
+          found = True
+      if not found:
+        print("Couldn't locate specified diagnosis:",nameSearch)
+        searchByName(diagnoses)
+  except Exception as e:
+    print(f'An unexpected error occured: {e}. Please try again!')
+  prompt1(diagnoses)
+
+def hardStudying(diagnoses):
+    irrelevantWords = [
+        'the','a','an','and','or','but','in','on','at','to','for','of','with','by','as','is','was',
+        'were','be','been','have','has','having','had','do','does','did','will','would','could','should',
+        'may','might','must','can','left','right','all','every','each','few','many',
+        'most','really','too','possible','potential','common','rare','frequent','occasional','sudden','gradual',
+        'least','progressive','excellent','good','treatment']
+    while True:
+        diagnosis = random.choice(diagnoses)
+        print('Condition: ',diagnosis.name)
+        symptomGuess = input(f"List symptom/s of {diagnosis.name} (If applicable, seperate by comma. I.e: s1, s2, etc...): ")
+        testsGuess = input(f"List test/s of {diagnosis.name} (If applicable, seperate by comma. I.e: test1, test2, etc...): ")
+        differentialGuess = input(f"List differential diagnosis/diagnoses of {diagnosis.name} (If applicable, seperate by comma. I.e: dd1, dd2, etc...): ")
+        treatmentGuess = input(f"List treatment/s of {diagnosis.name} (If applicable, seperate by comma. I.e: t1, t2, etc...): ")
+        prognosisGuess = input(f"List the prognosis of {diagnosis.name} (If applicable, seperate by comma. I.e: p1, p2, etc...): ")
+        usersSymptoms = [i.lower().strip() for i in symptomGuess.split(',')]
+        usersTests = [i.lower().strip() for i in testsGuess.split(',')]
+        usersDiffD = [i.lower().strip() for i in differentialGuess.split(',')]
+        usersTreatment = [i.lower().strip() for i in treatmentGuess.split(',')]
+        usersPrognosis = [i.lower().strip() for i in prognosisGuess.split(',')]
+        usymptoms = 0
+        utests = 0
+        udd = 0
+        utreatment = 0
+        uprog = 0
+        if not usersSymptoms or not usersTests or not usersDiffD or not usersTreatment or not usersPrognosis:
+            print('One of the fields was left empty, please try again!')
+            return
+        for g in usersSymptoms:
+            if any(g in s for s in diagnosis.symptomsList):
+                usymptoms+=1
+                break
+        for g in usersTests:
+            if g not in irrelevantWords and any(g in t.strip().lower() for t in diagnosis.tests.split(',')):
+                utests+=1
+                break
+        for g in usersDiffD:
+            if g not in irrelevantWords and any(g in dd.strip().lower() for dd in diagnosis.differentialDiagnoses.split(',')):
+                udd+=1
+                break
+        for g in usersTreatment:
+            if g not in irrelevantWords and any(g in t.strip().lower() for t in diagnosis.treatment.split(',')):
+                utreatment+=1
+                break
+        for g in usersPrognosis:
+            if g not in irrelevantWords and any(g in p.strip().lower() for p in diagnosis.prognosis.split(',')):
+                uprog+=1
+                break
+        grade = ((usymptoms+utests+udd+utreatment+uprog) * 20) / 100
+        print(f'\nProgram scores your response at {grade:.2f}%\n\n{diagnosis}.')
+        runAgain = input('Would you like to continue studying in hard mode (y), quit (q), or enter easy mode (e): ').strip().lower()
+        if runAgain in ['y','yes']:
+            continue
+        elif runAgain in ['e','easy','easymode','easy mode']:
+          print(f'\Switching to easy mode...\n')
+          easyStudying(diagnoses)
+          return
+        else:
+            print(f'\nExiting Program.')
+            return
+
+def easyStudying(diagnoses):
+  while True:
+    diagnosis = random.choice(diagnoses)
+    modeType = random.choice(['name','symptoms'])
+    if modeType == 'symptoms':
+      print(f'\nSymptoms:')
+      providedSymptoms = random.sample(diagnosis.symptomsList,min(2,len(diagnosis.symptomsList)))
+      for s in providedSymptoms:
+        print(" -",s)
+      guess = input('Which diagnosis matches these symptoms?: ').strip().lower()
+      if guess in diagnosis.name.lower():
+        print(f'\nCorrect!!')
+        print(f"{diagnosis}\n")
+      else:
+        print(f'\nIncorrect. We were thinking:\n{diagnosis}\n')
+      runAgain = input('Would you like to continue studying in easy mode (y), quit (q), or upgrade to hard mode (h): ').strip().lower()
+      if runAgain in ['y','yes']:
+        continue
+      elif runAgain in ['h','hard','hardmode','hard mode']:
+          print(f'\nSwitching to hard mode...\n')
+          hardStudying(diagnoses)
+          return
+      else:
+        print(f'\nExiting Program.')
+        return
+    elif modeType == 'name':
+      print(f"Diagnosis name: {diagnosis.name}")
+      correctSymptoms = 0
+      guess = input("List one or more symptoms of this condition (If applicable, seperate by comma. I.e: symptom1, symptom2, etc...): ")
+      guessedSymptoms = [i.strip().lower() for i in guess.split(',')]
+      if not guessedSymptoms:
+        print('No symptoms entered. Please try again!')
+        return
+      for g in guessedSymptoms:
+        if any(g in s for s in diagnosis.symptomsList):
+          correctSymptoms += 1
+      if correctSymptoms<1:
+        print(f"\nIncorrect.\n{diagnosis}\n")
+      elif correctSymptoms>0:
+        print(f"Well done! {correctSymptoms}/{len(guessedSymptoms)} symptoms you entered were correct!\n{diagnosis}\n")
+      runAgain = input('Would you like to continue studying in easy mode (y), quit (q), or upgrade to hard mode (h): ').strip().lower()
+      if runAgain in ['y','yes']:
+        continue
+      elif runAgain in ['h','hard','hardmode','hard mode']:
+          print(f'\nSwitching to hard mode...\n')
+          hardStudying(diagnoses)
+          return
+      else:
+        print(f'\nExiting Program.')
+        return
+
+def findResearchMethod(diagnoses):
+  try:
+    nameOrSympt = input(f'\nWould you like to research by name (n), symptoms (s), quit (q), or see previous prompt (^)?: ')
+    match nameOrSympt.lower():
+      case '^':
+        prompt1(diagnoses)
+      case 'n'|'name'|'names':
+        searchByName(diagnoses)
+      case 's'|'symptom'|'symptoms':
+        searchBySymptoms(diagnoses)
+      case 'q' | 'quit':
+        print(f'\nExiting Program.')
+        return
+      case _:
+        print(f"Invalid choice: {nameOrSympt}. Please enter 'n' for name, 's' for symptoms, '^' to see previous prompt, 'q' to quit.")
+  except Exception as e:
+    print(f'An uncexpected error occured: {e}. Please try again!')
+
+def findStudyMode(diagnoses):
+  try:
+    print(f"""\nEasy mode - Program will list either a diagnosis name or a handful of symptoms. Your goal is to
+respond with either the diagnosis name or symptoms accordinly.\n\nHard mode - Program will provide the name of the diagnosis,
+your goal is to list the specified diagnosis' symptoms,tests,differential diagnoses, treatments, and progrnosis.'""")
+    studyMode = input(f'\nWould you like to study in easy (e) mode, hard (h) mode, see previous prompt (^), or quit (q)?: ')
+    match studyMode.lower():
+      case 'e' | 'easy'|'easy mode':
+        print(f'\nEntering easy studying mode.\n')
+        easyStudying(diagnoses)
+      case 'h' | 'hard'|'hard mode':
+        print(f'\nEntering hard studying mode.\n')
+        hardStudying(diagnoses)
+      case '^':
+        prompt1(diagnoses)
+      case 'q' | 'quit':
+        print(f'\nExiting Program.')
+        return
+      case _:
+        print(f"Invalid choice: {studyMode}. Please enter 'e' for easy mode or 'h' for hard mode, '^' to see previous prompt, or quit (q).")
+  except Exception as e:
+    print(f"An unexpected error occured: {e}. Please try again!")
+
+def prompt1(diagnoses):
+  try:
+    prompt1 = input(f'\nWould you like to study (s), research (r), see all (a), or quit (q)?: ')
+    match prompt1.lower():
+      case 's'|'study':
+        findStudyMode(diagnoses)
+      case 'r'|'research':
+        findResearchMethod(diagnoses)
+      case 'a'|'all' | 'see all' | 'seeall':
+        seeAll()
+      case 'q'|'quit':
+        print(f'\nExiting Program.')
+      case _:
+        print(f"Invalid choice: {prompt1}. Please enter 's' to study, 'r' to research, 'a' to see all, or 'q' to quit.")
+  except Exception as e:
+      print(f"An unexpected error occured: {e}. Please try again!")
+
+
+if __name__ == "__main__":
+    diagnoses = loadDataFromFile()
+    if diagnoses:
+        prompt1(diagnoses)
+    else:
+        print('Failed to load data from file.')
